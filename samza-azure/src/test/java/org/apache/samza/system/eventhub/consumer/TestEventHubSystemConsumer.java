@@ -33,6 +33,7 @@ import org.apache.samza.testUtils.TestClock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -47,6 +48,7 @@ import static org.apache.samza.system.eventhub.MockEventHubConfigFactory.*;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EventHubRuntimeInformation.class, PartitionRuntimeInformation.class,
         EventHubClient.class, PartitionReceiver.class, PartitionSender.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestEventHubSystemConsumer {
   private static final String MOCK_ENTITY_1 = "mocktopic1";
   private static final String MOCK_ENTITY_2 = "mocktopic2";

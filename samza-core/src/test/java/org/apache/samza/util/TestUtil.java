@@ -31,6 +31,7 @@ import org.apache.samza.config.MapConfig;
 import org.apache.samza.config.TaskConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -43,6 +44,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Util.class) // need this to be able to use powermock with system classes like InetAddress
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestUtil {
   @Test
   public void testEnvVarEscape() {

@@ -34,6 +34,7 @@ import org.apache.samza.util.CoordinatorStreamUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -54,6 +55,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
     JobCoordinatorLaunchUtil.class,
     CoordinatorStreamStore.class,
     RemoteJobPlanner.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestJobCoordinatorLaunchUtil {
   @Test
   public void testCreateFromConfigLoader() throws Exception {

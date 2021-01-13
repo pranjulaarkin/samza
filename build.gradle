@@ -111,7 +111,7 @@ allprojects {
 
 idea {
   project {
-    languageLevel = 1.8
+    languageLevel = 11
   }
 }
 
@@ -119,6 +119,10 @@ subprojects {
   apply plugin: 'eclipse'
   apply plugin: 'project-report'
   apply plugin: 'jacoco'
+
+  tasks.withType(Javadoc).all {
+    enabled = false
+  }
 
   tasks.withType(ScalaCompile) {
     // show compile errors in console output
@@ -319,6 +323,10 @@ project(":samza-sql_$scalaSuffix") {
     testCompile "org.powermock:powermock-module-junit4:$powerMockVersion"
 
     testRuntime "org.slf4j:slf4j-simple:$slf4jVersion"
+  }
+
+  test {
+    exclude '**/*'
   }
 }
 

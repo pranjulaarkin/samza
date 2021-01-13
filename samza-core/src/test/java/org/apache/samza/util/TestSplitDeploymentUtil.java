@@ -22,6 +22,7 @@ import org.apache.samza.clustermanager.ClusterBasedJobCoordinator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -34,6 +35,7 @@ import static org.powermock.api.mockito.PowerMockito.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ClusterBasedJobCoordinator.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestSplitDeploymentUtil {
 
   @Test

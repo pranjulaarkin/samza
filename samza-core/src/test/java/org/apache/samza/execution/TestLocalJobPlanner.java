@@ -38,6 +38,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -60,6 +61,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({LocalJobPlanner.class, JobCoordinatorConfig.class, ZkMetadataStoreFactory.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestLocalJobPlanner {
 
   private static final String PLAN_JSON =

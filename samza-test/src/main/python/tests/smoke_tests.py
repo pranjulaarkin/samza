@@ -64,7 +64,7 @@ def _load_data():
   kafka.ensure_topic_exists(TEST_INPUT_TOPIC)
   producer = SimpleProducer(
     kafka,
-    async=False,
+    async_send=False,
     req_acks=SimpleProducer.ACK_AFTER_CLUSTER_COMMIT,
     ack_timeout=30000)
   for i in range(1, NUM_MESSAGES + 1):

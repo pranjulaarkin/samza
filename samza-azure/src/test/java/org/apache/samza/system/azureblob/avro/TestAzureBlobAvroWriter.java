@@ -56,6 +56,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -71,6 +72,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BlobContainerAsyncClient.class, BlockBlobAsyncClient.class, AzureBlobAvroWriter.class, AzureBlobOutputStream.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestAzureBlobAvroWriter {
   private ThreadPoolExecutor threadPool;
   private OutgoingMessageEnvelope ome;
@@ -90,6 +92,9 @@ public class TestAzureBlobAvroWriter {
 
   private class SpecificRecordEvent extends org.apache.avro.specific.SpecificRecordBase
       implements org.apache.avro.specific.SpecificRecord {
+
+    public SpecificRecordEvent() {}
+
     public final org.apache.avro.Schema schema = org.apache.avro.Schema.parse(
         "{\"type\":\"record\",\"name\":\"SpecificRecordEvent\",\"namespace\":\"org.apache.samza.events\",\"fields\":[]}");
 
@@ -105,6 +110,9 @@ public class TestAzureBlobAvroWriter {
   }
 
   private class GenericRecordEvent implements org.apache.avro.generic.GenericRecord {
+
+    public GenericRecordEvent() {}
+
     public final org.apache.avro.Schema schema = org.apache.avro.Schema.parse(
         "{\"type\":\"record\",\"name\":\"GenericRecordEvent\",\"namespace\":\"org.apache.samza.events\",\"fields\":[]}");
 

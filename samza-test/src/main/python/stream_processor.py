@@ -34,7 +34,7 @@ class StreamProcessor:
         :param host_name: Represents the host name in which this StreamProcessor will run.
         :param processor_id: Represents the processor_id of StreamProcessor.
         """
-        start_cmd = 'export SAMZA_LOG_DIR=\"deploy/{0}\"; export JAVA_OPTS=\"$JAVA_OPTS -Xmx2G\"; ./bin/run-class.sh  org.apache.samza.test.integration.LocalApplicationRunnerMain --config-path ./config/standalone.failure.test.properties --operation run --config processor.id={0} >> /tmp/{0}.log &'
+        start_cmd = 'export JAVA_OPTS=\"$JAVA_OPTS -Xmx2G\"; ./bin/run-class.sh  org.apache.samza.test.integration.LocalApplicationRunnerMain --config-path ./config/standalone.failure.test.properties --operation run --config processor.id={0} >> /tmp/{0}.log &'
         self.username = runtime.get_username()
         self.password = runtime.get_password()
         self.processor_id = processor_id
@@ -43,7 +43,7 @@ class StreamProcessor:
         logger.info('Running processor start command: {0}'.format(self.processor_start_command))
         self.deployment_config = {
             'install_path': os.path.join(runtime.get_active_config('remote_install_path'), 'deploy/{0}'.format(self.processor_id)),
-            'executable': 'samza-test_2.11-1.5.1.tgz',
+            'executable': 'samza-test_2.12-1.5.1.tgz',
             'post_install_cmds': [],
             'start_command': self.processor_start_command,
             'stop_command': '',
