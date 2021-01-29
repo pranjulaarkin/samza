@@ -20,6 +20,8 @@ package org.apache.samza.startpoint;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import org.apache.samza.Partition;
 import org.apache.samza.system.SystemStreamPartition;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -69,7 +71,7 @@ public class TestStartpointObjectMapper {
 
   @Test
   public void testFanOutSerde() throws IOException {
-    StartpointFanOutPerTask startpointFanOutPerTask = new StartpointFanOutPerTask(Instant.now().minusSeconds(60));
+    StartpointFanOutPerTask startpointFanOutPerTask = new StartpointFanOutPerTask(Instant.now().minusSeconds(60).truncatedTo(ChronoUnit.MILLIS));
     startpointFanOutPerTask.getFanOuts()
         .put(new SystemStreamPartition("system1", "stream1", new Partition(1)), new StartpointUpcoming());
     startpointFanOutPerTask.getFanOuts()

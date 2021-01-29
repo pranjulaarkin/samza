@@ -101,18 +101,26 @@ mkdir -p $base_dir/tmp
 JAVA_TEMP_DIR=$base_dir/tmp
 
 # Check whether the JVM supports GC Log rotation, and enable it if so.
-function check_and_enable_gc_log_rotation {
+function check_and_enable_gc_log_rotation_jdk8 {
   `$JAVA -Xloggc:/dev/null $GC_LOG_ROTATION_OPTS -version 2> /dev/null`
   if [ $? -eq 0 ] ; then
     JAVA_OPTS="$JAVA_OPTS $GC_LOG_ROTATION_OPTS"
   fi
 }
 
-# Try and use 64-bit mode if available in JVM_OPTS
-function check_and_enable_64_bit_mode {
-  `$JAVA -d64 -version`
+# Check whether the JVM supports GC Log rotation, and enable it if so.
+function check_and_enable_gc_logging {
+  `$JAVA -Xloggc:/dev/null -version 2> /dev/null`
   if [ $? -eq 0 ] ; then
-    JAVA_OPTS="$JAVA_OPTS -d64"
+    JAVA_OPTS="$JAVA_OPTS -Xloggc:$SAMZA_LOG_DIR/gc.log"
+  fi
+}
+
+# Check whether the JVM supports GC Log rotation, and enable it if so for jdk11.
+function check_and_enable_gc_log_rotation_jdk11 {
+  `$JAVA -Xlog:gc*::time,level,tags:filecount=10,filesize=1024K -version > /dev/null 2>&1`
+  if [ $? -eq 0 ] ; then
+    JAVA_OPTS="$JAVA_OPTS -Xlog:gc*:$SAMZA_LOG_DIR/gc.log:time,level,tags:filecount=10,filesize=1024K"
   fi
 }
 
@@ -155,13 +163,13 @@ fi
 [[ $JAVA_OPTS != *-Xmx* ]] && JAVA_OPTS="$JAVA_OPTS -Xmx768M"
 
 # Check if the GC related flags are specified. If not - add the respective flags to JVM_OPTS.
-[[ $JAVA_OPTS != *PrintGCDateStamps* && $JAVA_OPTS != *-Xloggc* ]] && JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDateStamps -Xloggc:$SAMZA_LOG_DIR/gc.log"
+[[ $JAVA_OPTS != *-Xloggc* ]] && check_and_enable_gc_logging
 
 # Check if GC log rotation is already enabled. If not - add the respective flags to JVM_OPTS
-[[ $JAVA_OPTS != *UseGCLogFileRotation* ]] && check_and_enable_gc_log_rotation
+[[ $JAVA_OPTS != *UseGCLogFileRotation* ]] && check_and_enable_gc_log_rotation_jdk8
 
-# Check if 64 bit is set. If not - try and set it if it's supported
-[[ $JAVA_OPTS != *-d64* ]] && check_and_enable_64_bit_mode
+# Special handling for jdk11 for enabling gc logging and its rotation
+[[ $JAVA_OPTS != *"-Xlog:gc"* ]] && check_and_enable_gc_log_rotation_jdk11
 
 echo $JAVA $JAVA_OPTS -cp base-lib-pathing.jar:runtime-framework-resources-pathing.jar "$@"
 

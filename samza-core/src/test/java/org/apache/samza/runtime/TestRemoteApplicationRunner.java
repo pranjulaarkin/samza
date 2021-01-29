@@ -34,6 +34,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -49,6 +50,7 @@ import static org.mockito.Mockito.spy;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(RemoteApplicationRunner.class)
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestRemoteApplicationRunner {
 
   private RemoteApplicationRunner runner;

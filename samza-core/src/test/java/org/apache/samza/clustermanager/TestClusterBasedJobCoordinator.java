@@ -50,6 +50,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.exceptions.base.MockitoException;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -72,6 +73,7 @@ import static org.powermock.api.mockito.PowerMockito.mock;
     ClusterBasedJobCoordinator.class,
     CoordinatorStreamStore.class,
     RemoteJobPlanner.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestClusterBasedJobCoordinator {
 
   private Map<String, String> configMap;

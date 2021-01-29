@@ -213,6 +213,7 @@ public class TestZkUtils {
     try {
       Field f = zkUtils.getClass().getDeclaredField("ZK_PROTOCOL_VERSION");
       FieldUtils.removeFinalModifier(f);
+      f.setAccessible(true);
       f.set(null, "3.0");
     } catch (Exception e) {
       System.out.println(e);

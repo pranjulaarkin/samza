@@ -54,8 +54,8 @@ def validate_kafka_read_write_performance():
     TEST_OUTPUT_TOPIC,
     fetch_size_bytes=1000000,
     buffer_size=32768,
-    max_buffer_size=None)
-  # wait 5 minutes to get all million messages
+    max_buffer_size=1073741824)
+  # wait 3 minutes to get all the messages
   messages = consumer.get_messages(count=NUM_MESSAGES, block=True, timeout=300)
   message_count = len(messages)
   assert NUM_MESSAGES == message_count, 'Expected {0} lines, but found {1}'.format(NUM_MESSAGES, message_count)

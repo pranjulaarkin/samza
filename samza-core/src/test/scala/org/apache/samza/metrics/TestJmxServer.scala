@@ -36,7 +36,7 @@ import org.powermock.modules.junit4.PowerMockRunner
 
 @RunWith(classOf[PowerMockRunner])
 @PrepareForTest(Array(classOf[JMXConnectorServerFactory]))
-@PowerMockIgnore(Array("javax.management.*"))
+@PowerMockIgnore(Array("javax.management.*", "jdk.internal.reflect.*"))
 class TestJmxServer extends Logging {
 
   @Test

@@ -40,6 +40,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -57,6 +58,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({AzureBlobSystemProducer.class, ThreadPoolExecutor.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestAzureBlobSystemProducer {
 
   private final static String SYSTEM_NAME = "FAKE_SYSTEM";
@@ -554,6 +556,9 @@ public class TestAzureBlobSystemProducer {
 
   private class DummyPageViewEvent extends org.apache.avro.specific.SpecificRecordBase
       implements org.apache.avro.specific.SpecificRecord {
+
+    public DummyPageViewEvent(){}
+
     public final org.apache.avro.Schema schema = org.apache.avro.Schema.parse(
         "{\"type\":\"record\",\"name\":\"DummyPageViewEvent\",\"namespace\":\"org.apache.samza.events\",\"fields\":[]}");
 
@@ -570,6 +575,9 @@ public class TestAzureBlobSystemProducer {
 
   private class AnotherDummyPageViewEvent extends org.apache.avro.specific.SpecificRecordBase
       implements org.apache.avro.specific.SpecificRecord {
+
+    public AnotherDummyPageViewEvent(){}
+
     public final org.apache.avro.Schema schema = org.apache.avro.Schema.parse(
         "{\"type\":\"record\",\"name\":\"AnotherDummyPageViewEvent\",\"namespace\":\"org.apache.samza.events\",\"fields\":[]}");
 

@@ -111,7 +111,7 @@ allprojects {
 
 idea {
   project {
-    languageLevel = 1.8
+    languageLevel = 11
   }
 }
 
@@ -119,6 +119,10 @@ subprojects {
   apply plugin: 'eclipse'
   apply plugin: 'project-report'
   apply plugin: 'jacoco'
+
+  tasks.withType(Javadoc).all {
+    enabled = false
+  }
 
   tasks.withType(ScalaCompile) {
     // show compile errors in console output
@@ -320,6 +324,10 @@ project(":samza-sql_$scalaSuffix") {
 
     testRuntime "org.slf4j:slf4j-simple:$slf4jVersion"
   }
+
+  test {
+    exclude '**/*'
+  }
 }
 
 project(":samza-sql-shell_$scalaSuffix") {
@@ -491,6 +499,7 @@ project(":samza-yarn_$scalaSuffix") {
   dependencies {
     compile project(':samza-api')
     compile project(":samza-core_$scalaSuffix")
+    compile "org.apache.avro:avro:$avroVersion"
     compile "org.scala-lang:scala-library:$scalaVersion"
     compile "org.scala-lang:scala-compiler:$scalaVersion"
     compile "com.google.guava:guava:$guavaVersion"
@@ -509,6 +518,7 @@ project(":samza-yarn_$scalaSuffix") {
       exclude module: 'servlet-api'
       // Exclude because YARN's 3.4.5 ZK version is incompatbile with Kafka's 3.3.4.
       exclude module: 'zookeeper'
+      exclude module: 'avro'
     }
     compile("org.apache.hadoop:hadoop-hdfs:$yarnVersion") {
       exclude module: 'servlet-api'
@@ -728,12 +738,14 @@ project(":samza-hdfs_$scalaSuffix") {
     // SAMZA-1032 to solve the staging directory dependency
     compile project(":samza-yarn_$scalaSuffix")
     compile "org.scala-lang:scala-library:$scalaVersion"
+    compile "org.apache.avro:avro:$avroVersion"
     compile("org.apache.hadoop:hadoop-hdfs:$yarnVersion") {
       exclude module: 'servlet-api'
     }
     compile("org.apache.hadoop:hadoop-common:$yarnVersion") {
       exclude module: 'servlet-api'
       exclude module: 'zookeeper'
+      exclude module: 'avro'
     }
 
     testCompile "junit:junit:$junitVersion"
@@ -758,6 +770,7 @@ project(":samza-rest_$scalaSuffix") {
     compile "org.glassfish.jersey.media:jersey-media-moxy:$jerseyVersion"
     compile "org.eclipse.jetty.aggregate:jetty-all:$jettyVersion"
     compile "commons-httpclient:commons-httpclient:$commonsHttpClientVersion"
+    compile "org.codehaus.jackson:jackson-jaxrs:$jacksonVersion"
     compile("org.apache.hadoop:hadoop-yarn-client:$yarnVersion") {
       exclude module: 'servlet-api'
       exclude group: 'com.sun.jersey'
@@ -825,6 +838,11 @@ project(":samza-test_$scalaSuffix") {
     compile.exclude group: 'javax.jms', module: 'jms'
     compile.exclude group: 'com.sun.jdmk', module: 'jmxtools'
     compile.exclude group: 'com.sun.jmx', module: 'jmxri'
+  }
+
+  //resolve a dependency
+  configurations.all {
+    resolutionStrategy.force 'org.apache.avro:avro:1.7.7'
   }
 
   dependencies {

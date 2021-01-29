@@ -66,6 +66,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import scala.collection.JavaConversions;
@@ -75,6 +76,7 @@ import scala.collection.JavaConversions;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({TaskAssignmentManager.class, GroupByContainerCount.class, ConfigUtil.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestJobModelManager {
   private final TaskAssignmentManager mockTaskManager = mock(TaskAssignmentManager.class);
   private final Map<String, Map<String, String>> localityMappings = new HashMap<>();

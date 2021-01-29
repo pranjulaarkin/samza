@@ -42,6 +42,7 @@ import org.apache.samza.system.eventhub.producer.EventHubSystemProducer.Partitio
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -50,6 +51,7 @@ import static org.apache.samza.system.eventhub.MockEventHubConfigFactory.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({EventHubRuntimeInformation.class, PartitionRuntimeInformation.class, EventHubClient.class, PartitionReceiver.class, PartitionSender.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestEventHubSystemProducer {
 
   private static final String SOURCE = "TestEventHubSystemProducer";

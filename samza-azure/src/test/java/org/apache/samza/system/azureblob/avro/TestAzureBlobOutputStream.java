@@ -44,6 +44,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import reactor.core.publisher.Mono;
@@ -68,6 +69,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({BlockBlobAsyncClient.class})
+@PowerMockIgnore("jdk.internal.reflect.*")
 public class TestAzureBlobOutputStream {
   private ThreadPoolExecutor threadPool;
   private ByteArrayOutputStream mockByteArrayOutputStream;

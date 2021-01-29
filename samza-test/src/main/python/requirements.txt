@@ -17,6 +17,6 @@
 
 zopkio==0.2.5
 requests
-kafka-python==1.3.3
+kafka-python==1.4.7
 Jinja2
 kazoo==2.5
