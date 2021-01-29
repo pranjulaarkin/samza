@@ -38,11 +38,37 @@ public class MockNMClient extends NMClient {
   }
 
   @Override
+  public void increaseContainerResource(Container container) throws YarnException, IOException {
+
+  }
+
+  @Override
+  public void updateContainerResource(Container container) throws YarnException, IOException {
+
+  }
+
+  @Override
   public void stopContainer(ContainerId containerId, NodeId nodeId) throws YarnException, IOException { }
 
   @Override
   public ContainerStatus getContainerStatus(ContainerId containerId, NodeId nodeId) throws YarnException, IOException {
     return null;
+  }
+
+  @Override
+  public void reInitializeContainer(ContainerId containerId, ContainerLaunchContext containerLaunchContext, boolean b) throws YarnException, IOException {
+  }
+
+  @Override
+  public void restartContainer(ContainerId containerId) throws YarnException, IOException {
+  }
+
+  @Override
+  public void rollbackLastReInitialization(ContainerId containerId) throws YarnException, IOException {
+  }
+
+  @Override
+  public void commitLastReInitialization(ContainerId containerId) throws YarnException, IOException {
   }
 
   @Override

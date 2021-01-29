@@ -47,7 +47,7 @@
   rocksdbVersion = "6.5.3"
   scalaTestVersion = "3.0.1"
   slf4jVersion = "1.7.7"
-  yarnVersion = "2.7.1"
+  yarnVersion = "3.0.0-cdh6.3.2"
   zkClientVersion = "0.8"
   zookeeperVersion = "3.4.6"
   failsafeVersion = "1.1.0"

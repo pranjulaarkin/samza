@@ -56,7 +56,7 @@ class TestSamzaYarnAppMasterLifecycle {
           def getVirtualCores = 2
           def setMemory(memory: Int) {}
           def setVirtualCores(vCores: Int) {}
-          def compareTo(o: Resource) = 0
+          override def compareTo(o: Resource) = 0
         }
         override def getClientToAMTokenMasterKey = null
         override def setClientToAMTokenMasterKey(buffer: ByteBuffer) {}
@@ -69,6 +69,9 @@ class TestSamzaYarnAppMasterLifecycle {
 
         override def setSchedulerResourceTypes(types: java.util.EnumSet[SchedulerResourceTypes]): Unit = {}
         override def getSchedulerResourceTypes: java.util.EnumSet[SchedulerResourceTypes] = null
+
+        override def setResourceTypes(types: java.util.List[ResourceTypeInfo]): Unit = {}
+        override def getResourceTypes: java.util.List[ResourceTypeInfo] = null
       }
     }
     override def unregisterApplicationMaster(appStatus: FinalApplicationStatus,
